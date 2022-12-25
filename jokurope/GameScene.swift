@@ -8,53 +8,32 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
-    
-    private var down_atlas: SKTextureAtlas {
-        return SKTextureAtlas(named: "dude_down")
-    }
+func atlas_to_textures(_ src: SKTextureAtlas) -> [SKTexture]{
+    return src.textureNames.map {name in src.textureNamed(name)}
+}
 
-    private var up_atlas: SKTextureAtlas {
-        return SKTextureAtlas(named: "dude_up")
+class GameScene: SKScene {
+
+    let atlases = ["down": SKTextureAtlas(named: "dude_down"),
+                   "up": SKTextureAtlas(named: "dude_up"),
+                   "left":  SKTextureAtlas(named: "dude_left"),
+                   "right": SKTextureAtlas(named: "dude_right")]
+
+    var textures: Dictionary<String, [SKTexture]> {
+        return ["down": atlas_to_textures(atlases["down"]!),
+                "up": atlas_to_textures(atlases["up"]!),
+                "left": atlas_to_textures(atlases["left"]!),
+                "right": atlas_to_textures(atlases["right"]!)]
     }
-    
-    private var left_atlas: SKTextureAtlas {
-        return SKTextureAtlas(named: "dude_left")
-    }
-    
-    private var right_atlas: SKTextureAtlas {
-        return SKTextureAtlas(named: "dude_right")
-    }
-    
-    func atlas_to_textures(_ src: SKTextureAtlas) -> [SKTexture]{
-        return src.textureNames.map {name in src.textureNamed(name)}
-    }
-    
-    private var down_textures: [SKTexture] {
-        return atlas_to_textures(down_atlas)
-    }
-    
-    private var up_textures: [SKTexture] {
-        return atlas_to_textures(up_atlas)
-    }
-    
-    private var left_textures: [SKTexture] {
-        return atlas_to_textures(left_atlas)
-    }
-    
-    private var right_textures: [SKTexture] {
-        return atlas_to_textures(right_atlas)
-    }
-    
+                            
     override func didMove(to view: SKView)  {
         
-        let animation = SKAction.animate(with: right_textures, timePerFrame: 0.1)
+        let animation = SKAction.animate(with: textures["right"]!, timePerFrame: 0.1)
         
-        let dude = SKSpriteNode(texture: right_textures.first)
+        let dude = SKSpriteNode(texture: textures["right"]!.first)
         
         dude.position = CGPoint(x: 100, y: 100)
         dude.run(SKAction.repeatForever(animation), withKey: "down_anim")
         self.addChild(dude)
-    }
-    
+    }    
 }
