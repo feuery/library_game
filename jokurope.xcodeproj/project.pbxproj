@@ -17,6 +17,7 @@
 		C6E0555229572EE700D425B2 /* jokuropeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E0555129572EE700D425B2 /* jokuropeTests.swift */; };
 		C6E0555C29572EE700D425B2 /* jokuropeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E0555B29572EE700D425B2 /* jokuropeUITests.swift */; };
 		C6E0555E29572EE700D425B2 /* jokuropeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E0555D29572EE700D425B2 /* jokuropeUITestsLaunchTests.swift */; };
+		C6E0556B295DEEE600D425B2 /* MyTileSet.sks in Resources */ = {isa = PBXBuildFile; fileRef = C6E0556A295DEEE600D425B2 /* MyTileSet.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		C6E0555729572EE700D425B2 /* jokuropeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = jokuropeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6E0555B29572EE700D425B2 /* jokuropeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = jokuropeUITests.swift; sourceTree = "<group>"; };
 		C6E0555D29572EE700D425B2 /* jokuropeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = jokuropeUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		C6E0556A295DEEE600D425B2 /* MyTileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyTileSet.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 				C6E0554329572EE700D425B2 /* Assets.xcassets */,
 				C6E0554529572EE700D425B2 /* Main.storyboard */,
 				C6E0554829572EE700D425B2 /* jokurope.entitlements */,
+				C6E0556A295DEEE600D425B2 /* MyTileSet.sks */,
 			);
 			path = jokurope;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 				C6E0553C29572EE600D425B2 /* GameScene.sks in Resources */,
 				C6E0554429572EE700D425B2 /* Assets.xcassets in Resources */,
 				C6E0553E29572EE600D425B2 /* Actions.sks in Resources */,
+				C6E0556B295DEEE600D425B2 /* MyTileSet.sks in Resources */,
 				C6E0554729572EE700D425B2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
