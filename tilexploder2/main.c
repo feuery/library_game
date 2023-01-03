@@ -6,8 +6,10 @@
 //
 
 #include <stdio.h>
+#include <stdbool.h>
 #include <unistd.h>
 #include <assert.h>
+#include <sys/stat.h>
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -29,7 +31,7 @@ SDL_Surface* create_surface(int w, int h) {
 }
   
 
-void explode(const char *tileset_path, int tile_w, int tile_h) {
+void explode(const char *tileset_path, int tile_w, int tile_h, bool group_by_y) {
   SDL_Surface *tileset_surface = IMG_Load(tileset_path);
   assert(tileset_surface);
 
@@ -52,8 +54,17 @@ void explode(const char *tileset_path, int tile_w, int tile_h) {
 	printf("blisurface failed %s\n", SDL_GetError());
 
 
+      int file_x = x / tile_w,
+	file_y = y / tile_h;
       char filename[1000];
-      snprintf(filename, sizeof(filename), "./tile %d %d.png", x / tile_w, y / tile_h);
+      if(group_by_y) {
+        snprintf(filename, sizeof(filename), "./%d/tile %d %d.png", file_y, file_x, file_y);
+	char directory[10];
+	snprintf(directory, sizeof(directory), "./%d", file_y);
+	mkdir(directory, 0755);	
+      }
+      else
+	snprintf(filename, sizeof(filename), "./tile %d %d.png", file_x, file_y);
 
       printf("Saving file %s\n", filename);
       if(IMG_SavePNG(tile, filename) != 0)
@@ -62,15 +73,15 @@ void explode(const char *tileset_path, int tile_w, int tile_h) {
     }
 
   SDL_FreeSurface(tileset_surface);
-    
 }
 
 int main(int argc, const char * argv[]) {
   int opt;
   int tile_w = 0,
     tile_h = 0;
+  bool group_by_y = false;
   const char *tileset_path = NULL;
-  while ((opt = getopt(argc, argv, "w:h:t:")) != -1) {
+  while ((opt = getopt(argc, argv, "w:h:t:g")) != -1) {
         switch (opt) {
         case 'w':
 	  sscanf(optarg, "%d", &tile_w);
@@ -78,17 +89,21 @@ int main(int argc, const char * argv[]) {
 	case 'h':
 	  sscanf(optarg, "%d", &tile_h);
 	  break;
+	case 'g':
+	  group_by_y = true;
+	  break;
 	case 't':
 	  tileset_path = optarg;
 	  break;
     }
   }
 
-  if (tile_w > 0 ||
-      tile_h > 0 ||
+  if (tile_w <= 0 ||
+      tile_h <= 0 ||
       !tileset_path) {
     puts("This app explodes a png tileset into its tiles\n");
-    puts("Usage: -w tile_w -h tile_h -t path_to_tileset_you're_exploding_into_tiles");
+    puts("Usage: -g -w tile_w -h tile_h -t path_to_tileset_you're_exploding_into_tiles");
+    puts("If -g is used, resulting tiles are sorted to directories by their y component");
   }
       
     
@@ -104,7 +119,7 @@ int main(int argc, const char * argv[]) {
   printf("%d x %d tiles \n", tile_w, tile_h);
   printf("loading tileset from: %s\n", tileset_path);
 
-  explode(tileset_path, tile_w, tile_h);
+  explode(tileset_path, tile_w, tile_h, group_by_y);
   
   return 0;
 }
